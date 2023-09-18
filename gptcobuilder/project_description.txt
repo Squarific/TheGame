@@ -1,0 +1,1 @@
+This is a game where every user has a unique ability and needs to cooperate with other users to achieve a common goal. It will mainly be played on smartphones. It will be built using web technologies for the frontend and nodejs with a database in the backend.
