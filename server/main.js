@@ -6,9 +6,6 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-
 const db = new sqlite3.Database('mydatabase.db');
 
 db.serialize(() => {
@@ -18,10 +15,28 @@ db.serialize(() => {
   db.run('CREATE TABLE IF NOT EXISTS inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, userid INTEGER, item TEXT, quantity INTEGER, FOREIGN KEY(userid) REFERENCES users(id))');
 });
 
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(bodyParser.json());
 
+// This endpoint will return a list of available abilities.
+app.get('/abilities', (req, res) => {
+  db.all('SELECT * FROM abilities', (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    } 
+    
+    if (rows) {
+      res.status(200).json(rows);
+    } else {
+      res.status(404).json({ error: 'Abilities not found' });
+    }
+  });
+});
+
 app.post('/register', (req, res) => {
-  const { name } = req.body;
+  const { name,abilities } = req.body;
   const passphrase = crypto.randomBytes(16).toString('hex');
 
   db.run('INSERT INTO users (name, passphrase) VALUES (?, ?)', [name, passphrase], (err) => {
@@ -29,6 +44,17 @@ app.post('/register', (req, res) => {
       console.error('Error registering user', err);
       res.status(500).json({ error: 'Internal Server Error' });
     } else {
+      
+      // Insert abilities into users_abilities table
+      abilities.forEach(ability => {
+        db.run('INSERT INTO users_abilities (userid, abilityid) VALUES ((SELECT id FROM users WHERE passphrase = ?), ?)',
+          [passphrase, ability], (err) => {
+            if (err) {
+              console.error('Error assigning abilities', err);
+            }
+          });
+      });
+
       res.status(201).json({ passphrase: passphrase });
     }
   });
@@ -71,4 +97,3 @@ app.post('/collectLove/:passphrase', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}/`);
 });
-
