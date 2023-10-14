@@ -43,24 +43,27 @@
         document.getElementById('register-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const formData = new FormData(this);
-            const jsonData = {};
-            formData.forEach((value, key) => {
-                if(!jsonData[key]) {
-                    jsonData[key] = value;
-                } else {
-                    if(!(jsonData[key] instanceof Array)) {
-                        jsonData[key] = [jsonData[key]];
-                    }
-                    jsonData[key].push(value);
-                }
-            });
+
+            // Get the array of abilities.
+            let abilities = formData.getAll("abilities");
+            // Ignore if no abilities.
+            if (!abilities.length) {
+                console.error('No abilities selected');
+                return;
+            }
+
+            // transform all abilities to number
+            abilities = abilities.map(Number);
+
+            // Replace array of abilities with its JSON string equivalent.
+            formData.set("abilities", JSON.stringify(abilities));
 
             fetch('http://localhost:3000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(jsonData),
+                body: JSON.stringify(Object.fromEntries(formData)),
             })
             .then(response => response.json())
             .then(data => {

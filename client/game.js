@@ -1,9 +1,9 @@
-document.getElementById('loginButton').addEventListener('click', (event)=>{
+document.getElementById('loginButton').addEventListener('click', (event) => {
     event.preventDefault();
     const passphrase = document.getElementById('passphrase').value;
     fetch(`http://localhost:3000/login/${passphrase}`)
     .then(response => {
-        if(response.status !== 200) {
+        if (response.status !== 200) {
             throw new Error('Error logging in');
         }
         return response.json();
@@ -22,6 +22,17 @@ document.getElementById('loginButton').addEventListener('click', (event)=>{
                 collectLoveButton.textContent = 'Collect love';
                 collectLoveButton.addEventListener('click', () => {
                     fetch(`http://localhost:3000/collectLove/${passphrase}`, { method: 'POST' });
+
+                    // New Code to create heart animation on click
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.style.left = `${Math.random() * 100}vw`;
+                    heart.style.animationDuration = `${Math.random() * 2 + 3}s`;
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => {
+                        document.body.removeChild(heart);
+                    }, 5000);
                 });
                 document.body.appendChild(collectLoveButton);
             }
@@ -31,4 +42,3 @@ document.getElementById('loginButton').addEventListener('click', (event)=>{
         console.error('Error:', error);
     });
 });
-

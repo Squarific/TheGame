@@ -43,27 +43,35 @@ app.get('/abilities', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  const { name,abilities } = req.body;
+  let { name, abilities } = req.body;
+    
+  abilities = JSON.parse(abilities);
+  if (!Array.isArray(abilities)) {
+      console.error('Abilities not an array:', abilities);
+      res.status(500).json({ error: 'Internal Server Error: Abilities must be an array.' });
+      return;
+  }
+
   const passphrase = crypto.randomBytes(16).toString('hex');
 
   db.run('INSERT INTO users (name, passphrase) VALUES (?, ?)', [name, passphrase], (err) => {
     if (err) {
       console.error('Error registering user', err);
       res.status(500).json({ error: 'Internal Server Error' });
-    } else {
-      
-      // Insert abilities into users_abilities table
-      abilities.forEach(ability => {
-        db.run('INSERT INTO users_abilities (userid, abilityid) VALUES ((SELECT id FROM users WHERE passphrase = ?), ?)',
-          [passphrase, ability], (err) => {
-            if (err) {
-              console.error('Error assigning abilities', err);
-            }
-          });
-      });
-
-      res.status(201).json({ passphrase: passphrase });
+      return;
     }
+
+    // Insert abilities into users_abilities table
+    abilities.forEach(ability => {
+      db.run('INSERT INTO users_abilities (userid, abilityid) VALUES ((SELECT id FROM users WHERE passphrase = ?), ?)',
+        [passphrase, ability], (err) => {
+          if (err) {
+            console.error('Error assigning abilities', err);
+          }
+        });
+    });
+
+    res.status(201).json({ passphrase: passphrase });
   });
 });
 
@@ -104,4 +112,3 @@ app.post('/collectLove/:passphrase', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}/`);
 });
-

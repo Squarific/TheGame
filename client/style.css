@@ -58,3 +58,39 @@ input[type="submit"]:hover {
 #greeting{
     color:#58fa82;
 }
+
+/* New Code for Heart Animation */
+.heart {
+    position: relative;
+    width: 100px;
+    height: 90px;
+    animation: fall linear;
+}
+
+.heart::before, .heart::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 52px;
+    height: 80px;
+    border-radius: 50px 50px 0 0;
+    background: #ff6347;
+}
+
+.heart::before {
+    left: 50px;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+
+.heart::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(calc(100vh - 90px));
+    }
+}
