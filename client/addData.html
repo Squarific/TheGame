@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Add Data</title>
+    <link href="style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+    <h1>Add Data</h1>
+    <form id="data-form">
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" required><br>
+        <label for="timestamp">Timestamp:</label>
+        <input type="text" id="timestamp" name="timestamp" required><br>
+        <input type="submit" value="Add Data">
+    </form>
+    <script>
+        document.getElementById('data-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            const formData = new FormData(this);
+            const jsonData = {};
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+            fetch('http://localhost:3000/api/data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Data added successfully:', data);
+                // You can update the UI or perform other actions here
+            })
+            .catch(error => {
+                console.error('Error adding data:', error);
+                // Handle errors here
+            });
+        });
+    </script>
+</body>
+</html>

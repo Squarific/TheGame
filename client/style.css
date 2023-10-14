@@ -16,7 +16,7 @@ h1 {
     color: #ff6347;
 }
 
-#loginForm {
+form {
     background-color: #333;
     max-width: 400px;
     margin: 0 auto;
@@ -41,7 +41,7 @@ input[type="text"] {
     color:#eee;
 }
 
-button {
+input[type="submit"] {
     background-color: #ff6347;
     color: #fff;
     padding: 10px 20px;
@@ -51,10 +51,10 @@ button {
     width: 100%;
 }
 
-button:hover {
+input[type="submit"]:hover {
     background-color: #ee3124;
 }
 
 #greeting{
-	color:#58fa82;
+    color:#58fa82;
 }

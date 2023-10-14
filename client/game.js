@@ -1,4 +1,5 @@
-document.getElementById('loginButton').addEventListener('click', ()=>{
+document.getElementById('loginButton').addEventListener('click', (event)=>{
+    event.preventDefault();
     const passphrase = document.getElementById('passphrase').value;
     fetch(`http://localhost:3000/login/${passphrase}`)
     .then(response => {
