@@ -13,6 +13,13 @@ db.serialize(() => {
   db.run('CREATE TABLE IF NOT EXISTS abilities (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)');
   db.run('CREATE TABLE IF NOT EXISTS users_abilities (userid INTEGER, abilityid INTEGER, FOREIGN KEY(userid) REFERENCES users(id), FOREIGN KEY(abilityid) REFERENCES abilities(id))');
   db.run('CREATE TABLE IF NOT EXISTS inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, userid INTEGER, item TEXT, quantity INTEGER, FOREIGN KEY(userid) REFERENCES users(id))');
+  
+  db.run("INSERT INTO abilities (name) SELECT 'CollectLove' WHERE NOT EXISTS(SELECT 1 FROM abilities WHERE name = 'CollectLove')", (err) => {
+    if (err) {
+      console.error('Error adding ability', err);
+    }
+  });
+
 });
 
 app.use(cors());
@@ -26,7 +33,7 @@ app.get('/abilities', (req, res) => {
     if (err) {
       res.status(500).json({ error: 'Internal Server Error' });
     } 
-    
+
     if (rows) {
       res.status(200).json(rows);
     } else {
@@ -97,3 +104,4 @@ app.post('/collectLove/:passphrase', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}/`);
 });
+
