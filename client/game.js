@@ -13,8 +13,22 @@ document.getElementById('loginButton').addEventListener('click', (event)=>{
         const greeting = document.getElementById('greeting');
         greeting.textContent = `Hello, ${userData.name}!`;
         greeting.style.display = 'block';
+
+        fetch(`http://localhost:3000/abilities/${passphrase}`)
+        .then(response => response.json())
+        .then(abilities => {
+            if (abilities.map(a => a.name).includes('CollectLove')) {
+                const collectLoveButton = document.createElement('button');
+                collectLoveButton.textContent = 'Collect love';
+                collectLoveButton.addEventListener('click', () => {
+                    fetch(`http://localhost:3000/collectLove/${passphrase}`, { method: 'POST' });
+                });
+                document.body.appendChild(collectLoveButton);
+            }
+        });
     })
     .catch(error => {
         console.error('Error:', error);
     });
 });
+
