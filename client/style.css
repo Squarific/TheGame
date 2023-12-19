@@ -84,14 +84,11 @@ input[type="submit"]:hover, button:hover {
     background-color: #ff6384;
 }
 
-/* Remaining CSS code for .heart and @keyframes fall is left unchanged */
-
 .heart {
     position: fixed;
     width: 100px;
     height: 90px;
     animation: fall linear forwards;
-    animation-duration: 5s; /* you can adjust the duration as desired */
     top: -90px; /* start position just above the viewport - adjust as needed */
     z-index: 10; /* ensures it is above other elements */
 }
