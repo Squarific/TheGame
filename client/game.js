@@ -14,7 +14,30 @@ document.getElementById('loginButton').addEventListener('click', (event) => {
         greeting.textContent = `Hello, ${userData.name}!`;
         greeting.style.display = 'block';
 
-        loadAbilities(passphrase); // Updated: Replaced duplicated code with the function call
+        fetch(`http://localhost:3000/abilities/${passphrase}`)
+        .then(response => response.json())
+        .then(abilities => {
+            if (abilities.map(a => a.name).includes('CollectLove')) {
+                const collectLoveButton = document.createElement('button');
+                collectLoveButton.className = 'collect-love-button'; // Added class for styling
+                collectLoveButton.textContent = 'Collect love';
+                collectLoveButton.addEventListener('click', () => {
+                    fetch(`http://localhost:3000/collectLove/${passphrase}`, { method: 'POST' });
+
+                    // New Code to create heart animation on click
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.style.left = `${Math.random() * 100}vw`;
+                    heart.style.animationDuration = `${Math.random() * 2 + 3}s`;
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => {
+                        document.body.removeChild(heart);
+                    }, 5000);
+                });
+                document.body.appendChild(collectLoveButton);
+            }
+        });
     })
     .catch(error => {
         console.error('Error:', error);
