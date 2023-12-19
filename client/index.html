@@ -1,21 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html class="dark-theme"> <!-- Set the default theme to dark -->
 <head>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
+    <div class="theme-toggle-container">
+        <label class="theme-toggle-label">
+            <input type="checkbox" id="theme-toggle" checked> <!-- Default checked for Dark theme -->
+            <span class="theme-toggle-slider"></span>
+        </label>
+    </div>
     <h1>Welcome to enbycity</h1>
     <div id="loginForm">
-      <form id="login-form">
-        <label for="passphrase">Enter your passphrase:</label>
-        <input type="text" id="passphrase" />
-        <input id="loginButton" type="submit" value="Login"/>
-      </form>
+        <form id="login-form">
+            <label for="passphrase">Enter your passphrase:</label>
+            <input type="text" id="passphrase" />
+            <input id="loginButton" type="submit" value="Login"/>
+        </form>
     </div>
     <div id="greeting" style="display: none;"></div>
     <script src="loginHandler.js"></script>
     <script src="abilityLoader.js"></script>
     <script src="abilityActions.js"></script>
+    <script src="themeToggle.js"></script>
 </body>
 </html>
