@@ -19,4 +19,21 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         htmlElement.classList.add('light-theme');
     }
+
+    // Function to switch themes when labels are clicked
+    function switchTheme(lightThemeSelected) {
+        if (lightThemeSelected) {
+            htmlElement.classList.add('light-theme');
+            htmlElement.classList.remove('dark-theme');
+            checkbox.checked = false;
+        } else {
+            htmlElement.classList.add('dark-theme');
+            htmlElement.classList.remove('light-theme');
+            checkbox.checked = true;
+        }
+    }
+
+    // Attach event listeners to the labels for additional click behavior
+    document.querySelector('.theme-label.light').addEventListener('click', () => switchTheme(true));
+    document.querySelector('.theme-label.dark').addEventListener('click', () => switchTheme(false));
 });
