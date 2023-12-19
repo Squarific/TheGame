@@ -78,8 +78,6 @@ input[type="submit"]:hover, button:hover {
     background-color: #ff6384;
 }
 
-/* Remaining CSS code for .heart and @keyframes fall is left unchanged */
-
 .heart {
     position: fixed;
     width: 100px;
@@ -170,23 +168,23 @@ input:checked + .theme-toggle-slider:before {
     transform: translateX(26px);
 }
 
-/* Dark theme styles */
+/* Adjusted Dark theme styles */
 .dark-theme {
-    background-color: #121212;
-    color: #ffffff;
+    background-color: #1f1f1f; /* Lightened the background color from #121212 */
+    color: #e0e0e0; /* Changed the text color for better contrast and readability */
 }
 
 .dark-theme h1 {
-    color: #c7c7c7;
+    color: #d0d0d0; /* Lightened the header text for better contrast */
 }
 
 .dark-theme form {
-    background-color: #222;
-    color: #eaeaea;
+    background-color: #2a2a2a; /* Lightened the form background color */
+    color: #ececec; /* Changed the form text color for better readability */
 }
 
 .dark-theme .theme-toggle-slider {
-    background-color: #333;
+    background-color: #3a3a3a; /* Lightened the theme toggle slider color */
 }
 
 /* Light theme styles */
