@@ -1,23 +1,19 @@
-const loadInventory = (passphrase) => {
+export const loadInventory = (passphrase) => {
     fetch(`http://localhost:3000/inventory/${passphrase}`)
         .then(response => response.json())
         .then(inventoryItems => {
-            const inventoryList = document.createElement('ul');
-            inventoryList.id = 'inventory-list';
-
-            inventoryItems.forEach(item => {
-                const inventoryItem = document.createElement('li');
-                inventoryItem.textContent = `${item.item}: ${item.quantity}`;
-                inventoryList.appendChild(inventoryItem);
-            });
-
             const inventoryContainer = document.getElementById('inventory-container');
-            // Remove the previous inventory list if it exists
-            const previousInventoryList = document.getElementById('inventory-list');
-            if (previousInventoryList) {
-                inventoryContainer.removeChild(previousInventoryList);
-            }
-            // Append the new inventory list to the container
+            inventoryContainer.style.display = 'block'; // Show the inventory container
+            const inventoryList = document.createElement('ul');
+            inventoryItems.forEach(item => {
+                // Translate inventory item to the corresponding emoji
+                const emoji = itemToEmoji(item.item);
+                const listItem = document.createElement('li');
+                listItem.textContent = `${emoji} ${item.quantity} x ${item.item}`;
+                inventoryList.appendChild(listItem);
+            });
+            // Clear previous inventory list (if any) and append the new list
+            inventoryContainer.innerHTML = '<h2>Your Inventory:</h2>';
             inventoryContainer.appendChild(inventoryList);
         })
         .catch(error => {
@@ -25,5 +21,14 @@ const loadInventory = (passphrase) => {
         });
 };
 
-// Export the function for use in other scripts
-export { loadInventory };
+// Helper function to convert item names to emoji
+// Add additional cases for different items with their corresponding emojis
+const itemToEmoji = (itemName) => {
+    switch (itemName.toLowerCase()) {
+        case 'heart':
+            return '❤️';
+        // Add more cases here for each inventory item type
+        default:
+            return '🔖'; // Default emoji for an item
+    }
+};
