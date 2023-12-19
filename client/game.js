@@ -19,6 +19,7 @@ document.getElementById('loginButton').addEventListener('click', (event) => {
         .then(abilities => {
             if (abilities.map(a => a.name).includes('CollectLove')) {
                 const collectLoveButton = document.createElement('button');
+                collectLoveButton.className = 'collect-love-button'; // Added class for styling
                 collectLoveButton.textContent = 'Collect love';
                 collectLoveButton.addEventListener('click', () => {
                     fetch(`http://localhost:3000/collectLove/${passphrase}`, { method: 'POST' });
