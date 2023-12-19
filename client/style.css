@@ -59,12 +59,15 @@ input[type="submit"]:hover {
     color:#58fa82;
 }
 
-/* New Code for Heart Animation */
+/* Updated Code for Heart Animation */
 .heart {
-    position: relative;
+    position: fixed;
     width: 100px;
     height: 90px;
-    animation: fall linear;
+    animation: fall linear forwards;
+    animation-duration: 5s; /* you can adjust the duration as desired */
+    top: -90px; /* start position just above the viewport - adjust as needed */
+    z-index: 10; /* ensures it is above other elements */
 }
 
 .heart::before, .heart::after {
@@ -91,6 +94,6 @@ input[type="submit"]:hover {
 
 @keyframes fall {
     to {
-        transform: translateY(calc(100vh - 90px));
+        top: 110vh; /* changes the final position to below the viewport */
     }
 }

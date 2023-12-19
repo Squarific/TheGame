@@ -9,12 +9,14 @@ const loadAbilityActions = (abilities, passphrase) => {
             const heart = document.createElement('div');
             heart.className = 'heart';
             heart.style.left = `${Math.random() * 100}vw`;
-            heart.style.animationDuration = `${Math.random() * 2 + 3}s`;
+            // You can adjust the offset if needed, to place the heart above the viewport top edge
+            heart.style.top = `-10%`; 
             document.body.appendChild(heart);
         
-            setTimeout(() => {
+            // Use the 'animationend' event to remove the heart after animation is complete
+            heart.addEventListener('animationend', () => {
                 document.body.removeChild(heart);
-            }, 5000);
+            });
         });
         document.body.appendChild(collectLoveButton);
     }
