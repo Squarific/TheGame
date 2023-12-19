@@ -1,3 +1,5 @@
+import { loadInventory } from './inventoryDisplay.js';
+
 document.getElementById('loginButton').addEventListener('click', (event) => {
     event.preventDefault();
     const passphrase = document.getElementById('passphrase').value;
@@ -16,6 +18,8 @@ document.getElementById('loginButton').addEventListener('click', (event) => {
         
         // Loading abilities
         loadAbilities(passphrase);
+        // Loading inventory
+        loadInventory(passphrase);
     })
     .catch(error => {
         console.error('Error:', error);

@@ -24,7 +24,11 @@
         </form>
     </div>
     <div id="greeting" style="display: none;"></div>
-    <script src="loginHandler.js"></script>
+    <div id="inventory-container" style="display: none;"> <!-- The inventory will be displayed inside this div -->
+        <h2>Your Inventory:</h2>
+        <!-- Inventory items will be appended here by inventoryDisplay.js -->
+    </div>
+    <script src="loginHandler.js" type="module"></script>
     <script src="abilityLoader.js"></script>
     <script src="abilityActions.js"></script>
     <script src="themeToggle.js"></script>

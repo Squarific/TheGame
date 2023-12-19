@@ -128,6 +128,34 @@ app.post('/collectLove/:passphrase', (req, res) => {
   });
 });
 
+// New route to get user's inventory items
+app.get('/inventory/:passphrase', (req, res) => {
+  // Find the user by passphrase and then get the inventory for that user
+  db.get('SELECT id FROM users WHERE passphrase = ?', [req.params.passphrase], (err, user) => {
+    if (err) {
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (user) {
+      db.all('SELECT item, quantity FROM inventory WHERE userid = ?', [user.id], (err, inventory) => {
+        if (err) {
+          res.status(500).json({ error: 'Internal Server Error' });
+          return;
+        }
+
+        if (inventory) {
+          res.status(200).json(inventory);
+        } else {
+          res.status(404).json({ error: 'Inventory not found' });
+        }
+      });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}/`);
 });
