@@ -2,16 +2,20 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="themeToggle.js"></script> <!-- Moved the script here to ensure it loads before applying the theme -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
+    <div id="theme-toggle-container">
+        <button id="theme-toggle">Toggle Dark/Light Theme</button>
+    </div>
     <h1>Welcome to enbycity</h1>
     <div id="loginForm">
-      <form id="login-form">
-        <label for="passphrase">Enter your passphrase:</label>
-        <input type="text" id="passphrase" />
-        <input id="loginButton" type="submit" value="Login"/>
-      </form>
+        <form id="login-form">
+            <label for="passphrase">Enter your passphrase:</label>
+            <input type="text" id="passphrase" />
+            <input id="loginButton" type="submit" value="Login"/>
+        </form>
     </div>
     <div id="greeting" style="display: none;"></div>
     <script src="loginHandler.js"></script>
