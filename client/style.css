@@ -204,3 +204,43 @@ input:checked + .theme-toggle-slider:before {
 .light-theme .theme-toggle-slider {
     background-color: #ccc;
 }
+
+/* Additional styles for the emoji toggle */
+.theme-toggle-label .theme-toggle-slider {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+    /* This has been added to ensure emojis icons don't go outside the toggle slider */
+    overflow: hidden; 
+}
+
+.theme-toggle-label .theme-toggle-slider::before,
+.theme-toggle-label .theme-toggle-slider::after {
+    position: static; /* remove this rules because emojis will be used instead */
+    content: none; /* remove this rules because emojis will be used instead */
+}
+
+/* Styles for the light and dark emojis */
+.theme-toggle-slider .emoji {
+    color: #000;
+    font-size: 18px;
+}
+
+/* Light theme with sun emoji */
+.light-theme .theme-toggle-slider .emoji.sun {
+    display: none;
+}
+
+.light-theme .theme-toggle-slider {
+    justify-content: flex-end;
+}
+
+/* Dark theme with moon emoji */
+.dark-theme .theme-toggle-slider .emoji.moon {
+    display: none;
+}
+
+.dark-theme .theme-toggle-slider {
+    justify-content: flex-start;
+}

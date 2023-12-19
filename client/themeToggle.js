@@ -1,29 +1,22 @@
-// Toggle between dark and light themes
-function toggleTheme() {
-    const themeToggleButton = document.getElementById('theme-toggle');
-    const rootElement = document.documentElement;
+// This script is responsible for toggling between light and dark themes with their respective emoji.
+document.addEventListener('DOMContentLoaded', function() {
+    var checkbox = document.getElementById('theme-toggle');
+    var htmlElement = document.documentElement; // This should be the root HTML element.
 
-    themeToggleButton.addEventListener('change', () => {
-        if (themeToggleButton.checked) {
-            rootElement.classList.add('dark-theme');
-            rootElement.classList.remove('light-theme');
+    checkbox.addEventListener('change', function(event) {
+        if (event.target.checked) {
+            htmlElement.classList.add('dark-theme');
+            htmlElement.classList.remove('light-theme');
         } else {
-            rootElement.classList.remove('dark-theme');
-            rootElement.classList.add('light-theme');
+            htmlElement.classList.add('light-theme');
+            htmlElement.classList.remove('dark-theme');
         }
-        // Save the preference to localStorage
-        localStorage.setItem('theme', themeToggleButton.checked ? 'dark' : 'light');
     });
 
-    // Check for saved user preferences, if any, on load of the website
-    if (localStorage.getItem('theme') === 'light') {
-        rootElement.classList.remove('dark-theme');
-        rootElement.classList.add('light-theme');
-        themeToggleButton.checked = false;
+    // Set initial theme mode based on the checkbox checked property
+    if (checkbox.checked) {
+        htmlElement.classList.add('dark-theme');
+    } else {
+        htmlElement.classList.add('light-theme');
     }
-}
-
-// Initialize theme toggle functionality once DOM content is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    toggleTheme();
 });
