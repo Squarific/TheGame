@@ -119,42 +119,128 @@ input[type="submit"]:hover, button:hover {
 /* Theme toggle styles */
 .theme-toggle-container {
     display: flex;
-    align-items: center;
-    justify-content: center; /* Center the toggle switch container */
+    justify-content: flex-end;
     margin: 10px;
-    font-size: 14px; /* Adjust the font size for better readability */
 }
 
-.theme-label {
-    margin: 0 10px;
-    color: #777;
+.theme-toggle-label {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.theme-toggle-label input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-toggle-slider {
+    position: absolute;
     cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
 }
 
-.theme-label.light {
-    color: #f1c40f;
+.theme-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
 }
 
-.theme-label.dark {
-    color: #34495e;
+input:checked + .theme-toggle-slider {
+    background-color: #5e97d1;
 }
 
-.theme-toggle-label input:checked + .theme-toggle-slider {
-    background-color: #34495e; /* Color for the Dark theme */
+input:checked + .theme-toggle-slider:before {
+    transform: translateX(26px);
 }
 
-.theme-toggle-label input:not(:checked) + .theme-toggle-slider {
-    background-color: #f1c40f; /* Color for the Light theme */
+/* Adjusted Dark theme styles */
+.dark-theme {
+    background-color: #1f1f1f; /* Lightened the background color from #121212 */
+    color: #e0e0e0; /* Changed the text color for better contrast and readability */
 }
 
-/* Light theme with more prominent text colors for the active theme */
-.light-theme .theme-label.light {
-    color: #f39c12; /* A darker shade for the active Light theme label */
+.dark-theme h1 {
+    color: #d0d0d0; /* Lightened the header text for better contrast */
 }
 
-/* Dark theme with more prominent text colors for the active theme */
-.dark-theme .theme-label.dark {
-    color: #2c3e50; /* A darker shade for the active Dark theme label */
+.dark-theme form {
+    background-color: #2a2a2a; /* Lightened the form background color */
+    color: #ececec; /* Changed the form text color for better readability */
 }
 
-/* ... (the rest of the original CSS styles) ... */
+.dark-theme .theme-toggle-slider {
+    background-color: #3a3a3a; /* Lightened the theme toggle slider color */
+}
+
+/* Light theme styles */
+.light-theme {
+    background-color: #f5f5f5;
+    color: #444;
+}
+
+.light-theme h1 {
+    color: #5e97d1;
+}
+
+.light-theme form {
+    background-color: #fff;
+}
+
+.light-theme .theme-toggle-slider {
+    background-color: #ccc;
+}
+
+/* Additional styles for the emoji toggle */
+.theme-toggle-label .theme-toggle-slider {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+    /* This has been added to ensure emojis icons don't go outside the toggle slider */
+    overflow: hidden; 
+}
+
+.theme-toggle-label .theme-toggle-slider::before,
+.theme-toggle-label .theme-toggle-slider::after {
+    position: static; /* remove this rules because emojis will be used instead */
+    content: none; /* remove this rules because emojis will be used instead */
+}
+
+/* Styles for the light and dark emojis */
+.theme-toggle-slider .emoji {
+    color: #000;
+    font-size: 18px;
+}
+
+/* Light theme with sun emoji */
+.light-theme .theme-toggle-slider .emoji.sun {
+    display: none;
+}
+
+.light-theme .theme-toggle-slider {
+    justify-content: flex-end;
+}
+
+/* Dark theme with moon emoji */
+.dark-theme .theme-toggle-slider .emoji.moon {
+    display: none;
+}
+
+.dark-theme .theme-toggle-slider {
+    justify-content: flex-start;
+}
