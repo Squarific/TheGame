@@ -1,4 +1,5 @@
-// Add export statement at the beginning of the function
+import { loadAbilityActions } from './abilityActions.js';
+
 export const loadAbilities = (passphrase) => {
     fetch(`http://localhost:3000/abilities/${passphrase}`)
         .then(response => response.json())

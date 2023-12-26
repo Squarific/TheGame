@@ -130,3 +130,4 @@ dist
 .pnp.*
 
 gptcobuilder/requests/*
+gptcobuilder/logs/*

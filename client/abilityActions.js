@@ -1,4 +1,4 @@
-const loadAbilityActions = (abilities, passphrase) => {
+export const loadAbilityActions = (abilities, passphrase) => {
     if (abilities.map(a => a.name).includes('CollectLove')) {
         const collectLoveButton = document.createElement('button');
         collectLoveButton.className = 'collect-love-button'; // Added class for styling
@@ -22,3 +22,4 @@ const loadAbilityActions = (abilities, passphrase) => {
         document.body.appendChild(collectLoveButton);
     }
 };
+
