@@ -128,9 +128,8 @@ app.post('/collectLove/:passphrase', (req, res) => {
   });
 });
 
-// New route to get user's inventory items
 app.get('/inventory/:passphrase', (req, res) => {
-  // Find the user by passphrase and then get the inventory for that user
+  // Find the user by passphrase and then get the aggregate inventory for that user
   db.get('SELECT id FROM users WHERE passphrase = ?', [req.params.passphrase], (err, user) => {
     if (err) {
       res.status(500).json({ error: 'Internal Server Error' });
@@ -138,7 +137,8 @@ app.get('/inventory/:passphrase', (req, res) => {
     }
 
     if (user) {
-      db.all('SELECT item, quantity FROM inventory WHERE userid = ?', [user.id], (err, inventory) => {
+      // Using `GROUP BY` and `SUM` to aggregate inventory quantities
+      db.all('SELECT item, SUM(quantity) AS total_quantity FROM inventory WHERE userid = ? GROUP BY item', [user.id], (err, inventory) => {
         if (err) {
           res.status(500).json({ error: 'Internal Server Error' });
           return;

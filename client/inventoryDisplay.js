@@ -6,10 +6,11 @@ export const loadInventory = (passphrase) => {
             inventoryContainer.style.display = 'block'; // Show the inventory container
             const inventoryList = document.createElement('ul');
             inventoryItems.forEach(item => {
-                // Translate inventory item to the corresponding emoji
+                // Translate inventory item to the corresponding emoji and use the aggregated total
                 const emoji = itemToEmoji(item.item);
                 const listItem = document.createElement('li');
-                listItem.textContent = `${emoji} ${item.quantity} x ${item.item}`;
+                // Use the new property name `total_quantity` instead of `quantity`
+                listItem.textContent = `${emoji} ${item.total_quantity} x ${item.item}`;
                 inventoryList.appendChild(listItem);
             });
             // Clear previous inventory list (if any) and append the new list
@@ -22,7 +23,6 @@ export const loadInventory = (passphrase) => {
 };
 
 // Helper function to convert item names to emoji
-// Add additional cases for different items with their corresponding emojis
 const itemToEmoji = (itemName) => {
     switch (itemName.toLowerCase()) {
         case 'heart':
