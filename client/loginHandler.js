@@ -1,8 +1,8 @@
 import { loadInventory } from './inventoryDisplay.js';
+import { loadAbilities } from './abilityLoader.js';
 
-document.getElementById('loginButton').addEventListener('click', (event) => {
-    event.preventDefault();
-    const passphrase = document.getElementById('passphrase').value;
+// The function to load user info, now exportable
+export const loadUserInfo = (passphrase) => {
     fetch(`http://localhost:3000/login/${passphrase}`)
     .then(response => {
         if (response.status !== 200) {
@@ -11,6 +11,7 @@ document.getElementById('loginButton').addEventListener('click', (event) => {
         return response.json();
     })
     .then(userData => {
+        localStorage.setItem('passphrase', passphrase); // Store passphrase in localStorage
         document.getElementById('loginForm').style.display = 'none';
         const greeting = document.getElementById('greeting');
         greeting.textContent = `Hello, ${userData.name}!`;
@@ -24,4 +25,10 @@ document.getElementById('loginButton').addEventListener('click', (event) => {
     .catch(error => {
         console.error('Error:', error);
     });
+};
+
+document.getElementById('loginButton').addEventListener('click', (event) => {
+    event.preventDefault();
+    const passphrase = document.getElementById('passphrase').value;
+    loadUserInfo(passphrase); // Use the new exported function
 });
