@@ -1,5 +1,5 @@
 import { loadInventory } from './inventoryDisplay.js';
-import { loadAbilities } from './abilityLoader.js';
+import { loadAbilities } from './abilityLoader.js'; // Correctly imports the now exported function
 
 // The function to load user info, now exportable
 export const loadUserInfo = (passphrase) => {

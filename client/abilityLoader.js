@@ -1,4 +1,5 @@
-const loadAbilities = (passphrase) => {
+// Add export statement at the beginning of the function
+export const loadAbilities = (passphrase) => {
     fetch(`http://localhost:3000/abilities/${passphrase}`)
         .then(response => response.json())
         .then(abilities => {
