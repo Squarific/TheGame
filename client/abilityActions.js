@@ -15,7 +15,10 @@ export const loadAbilityActions = (abilities, passphrase) => {
                     const heart = document.createElement('div');
                     heart.className = 'heart';
                     heart.style.left = `${Math.random() * 100}vw`;
-                    heart.style.top = `-10%`;
+
+                    // Randomize the starting top position of the heart slightly for each heart (-10% to -15%)
+                    heart.style.top = `${-10 - (Math.random() * 5)}%`; // Adjust the -10% to start from higher and add randomness
+
                     document.body.appendChild(heart);
             
                     heart.addEventListener('animationend', () => {

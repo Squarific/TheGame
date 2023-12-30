@@ -107,7 +107,7 @@ app.post('/collectLove/:passphrase', (req, res) => {
       const diffMinutes = last_collected ? Math.floor((now - last_collected) / 60000) : 0; // Difference in minutes
 
       // If difference or last_collected is null (first collect), add one heart, else calculate based on minutes difference
-      const heartToAdd = diffMinutes ? Math.floor(diffMinutes / 5) : 1;
+      const heartToAdd = diffMinutes ? Math.floor(diffMinutes * 10) : 1;
 
       db.run('UPDATE users SET last_collected = ? WHERE passphrase = ?', [now.toISOString(), req.params.passphrase], (err) => {
         if (err) {
