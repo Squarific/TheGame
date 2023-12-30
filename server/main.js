@@ -24,7 +24,6 @@ db.serialize(() => {
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(bodyParser.json());
 
 app.get('/abilities', (req, res) => {
@@ -102,12 +101,15 @@ app.post('/collectLove/:passphrase', (req, res) => {
     if (err) {
       res.status(500).json({ error: 'Internal Server Error' });
     } else if (user) {
-      const last_collected = user.last_collected ? new Date(user.last_collected) : null;
+      // Initialize last_collected to the current date-time if it hasn't been set before
+      const last_collected = user.last_collected ? new Date(user.last_collected) : new Date();
       const now = new Date();
-      const diffMinutes = last_collected ? Math.floor((now - last_collected) / 60000) : null; // Difference in minutes
-      const heartToAdd = diffMinutes ? Math.floor(diffMinutes / 5) : 1; // If difference is null (first collect), add one heart
+      const diffMinutes = last_collected ? Math.floor((now - last_collected) / 60000) : 0; // Difference in minutes
 
-      db.run('UPDATE users SET last_collected = ? WHERE passphrase = ?', [now, req.params.passphrase], (err) => {
+      // If difference or last_collected is null (first collect), add one heart, else calculate based on minutes difference
+      const heartToAdd = diffMinutes ? Math.floor(diffMinutes / 5) : 1;
+
+      db.run('UPDATE users SET last_collected = ? WHERE passphrase = ?', [now.toISOString(), req.params.passphrase], (err) => {
         if (err) {
           console.error('Error updating last collected time', err);
           res.status(500).json({ error: 'Internal Server Error' });
@@ -159,3 +161,4 @@ app.get('/inventory/:passphrase', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}/`);
 });
+
