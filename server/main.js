@@ -118,7 +118,7 @@ app.post('/collectLove/:passphrase', (req, res) => {
           if (err) {
             res.status(500).json({ error: 'Internal Server Error' });
           } else {
-            res.status(201).json({ message: `Added ${heartToAdd} hearts to your inventory` });
+            res.status(201).json({ message: `Added ${heartToAdd} hearts to your inventory`, heartsCollected: heartToAdd });
           }
         });
       });
